@@ -109,24 +109,21 @@ export default function FeaturedProducts() {
                                     src={product.image}
                                     alt={product.name}
                                     className="absolute inset-0 w-full h-full object-cover"
-                                    onError={(e) => {
-                                        // Fallback to placeholder gradient if image fails to load
+                                    onLoad={(e) => {
                                         const target = e.target as HTMLImageElement;
-                                        target.style.display = 'none';
-                                        const fallback = target.nextElementSibling as HTMLElement;
-                                        if (fallback) fallback.style.display = 'block';
+                                        const fallback = target.parentElement?.querySelector('.fallback-placeholder') as HTMLElement;
+                                        if (fallback) fallback.classList.add('hidden');
+                                    }}
+                                    onError={(e) => {
+                                        const target = e.target as HTMLImageElement;
+                                        target.classList.add('hidden');
+                                        const fallback = target.parentElement?.querySelector('.fallback-placeholder') as HTMLElement;
+                                        if (fallback) fallback.classList.remove('hidden');
                                     }}
                                 />
 
                                 {/* Fallback placeholder gradient */}
-                                <div className="absolute inset-0 bg-gradient-to-br from-amber-200 to-orange-300 dark:from-amber-600 dark:to-orange-700" style={{ display: 'none' }}>
-                                    <div className="absolute inset-0 flex items-center justify-center">
-                                        <span className="text-6xl">🍰</span>
-                                    </div>
-                                </div>
-
-                                {/* Featured badge */}
-                                <div className="absolute top-3 right-3 bg-amber-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                                <div className="fallback-placeholder absolute inset-0 bg-gradient-to-br from-amber-200 to-orange-300 dark:from-amber-600 dark:to-orange-700">
                                     {tProduct('featured')}
                                 </div>
                             </div>

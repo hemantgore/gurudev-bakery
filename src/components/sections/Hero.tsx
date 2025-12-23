@@ -28,10 +28,7 @@ export default function Hero() {
                 className="absolute inset-0 z-0"
             >
                 <div
-                    className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                    style={{
-                        backgroundImage: 'url(/images/hero-bakery-bg.jpg)'
-                    }}
+                    className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-[url('/images/hero-bakery-bg.jpg')]"
                 />
                 {/* Dark overlay for better text readability */}
                 <div className="absolute inset-0 bg-black/40" />

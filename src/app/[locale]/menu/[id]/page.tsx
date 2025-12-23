@@ -17,6 +17,9 @@ export default function ProductDetailPage() {
     const productId = parseInt(params.id as string);
     const product = products.find((p) => p.id === productId);
 
+    const productName = locale === 'mr' ? product?.nameMr : product?.name;
+    const productDescription = locale === 'mr' ? product?.descriptionMr : product?.description;
+
     if (!product) {
         return (
             <div className="min-h-screen flex items-center justify-center">
@@ -61,9 +64,35 @@ export default function ProductDetailPage() {
                 >
                     {/* Product Image */}
                     <div className="relative aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-900/20 dark:to-orange-900/20">
-                        <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="text-6xl">🍰</div>
+                        {/* Actual product image */}
+                        <img
+                            src={product.image}
+                            alt={productName}
+                            className="absolute inset-0 w-full h-full object-cover"
+                            onLoad={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                const fallback = target.parentElement?.querySelector('.fallback-placeholder') as HTMLElement;
+                                if (fallback) fallback.classList.add('hidden');
+                            }}
+                            onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                target.classList.add('hidden');
+                                const fallback = target.parentElement?.querySelector('.fallback-placeholder') as HTMLElement;
+                                if (fallback) fallback.classList.remove('hidden');
+                            }}
+                        />
+
+                        {/* Fallback placeholder */}
+                        <div className="fallback-placeholder absolute inset-0 flex items-center justify-center">
+                            <div className="text-6xl">
+                                {product.category === 'cakes' && '🎂'}
+                                {product.category === 'breads' && '🍞'}
+                                {product.category === 'biscuits' && '🍪'}
+                                {product.category === 'khari' && '🥟'}
+                                {product.category === 'sweets' && '🧁'}
+                            </div>
                         </div>
+
                         {product.featured && (
                             <div className="absolute top-4 right-4 bg-amber-500 text-white px-4 py-2 rounded-full text-sm font-semibold">
                                 {t('featured')}
