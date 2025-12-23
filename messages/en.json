@@ -11,23 +11,143 @@
         "currency": "₹"
     },
     "home": {
-        "hero_title": "Welcome to Beakey Bakery",
+        "hero_title": "Welcome to Gurudev Bakery",
         "hero_subtitle": "Fresh baked goods daily",
+        "hero_description": "Serving delicious, handcrafted baked goods made with love and the finest ingredients",
         "cta_button": "View Menu",
-        "featured_products": "Featured Products"
+        "featured_title": "Featured Products",
+        "featured_subtitle": "Discover our most popular items",
+        "about_title": "About Gurudev Bakery",
+        "about_description": "At Gurudev Bakery, we believe in the magic of freshly baked goods. Every day, our skilled bakers craft delicious treats using traditional recipes and the finest ingredients. From our oven to your table, we ensure every bite is a moment of pure joy.",
+        "about_cta": "Learn More",
+        "why_choose_title": "Why Choose Us",
+        "fresh_daily": "Fresh Daily",
+        "fresh_daily_desc": "All products baked fresh every morning",
+        "quality_ingredients": "Quality Ingredients",
+        "quality_ingredients_desc": "We use only the finest, locally sourced ingredients",
+        "traditional_recipes": "Traditional Recipes",
+        "traditional_recipes_desc": "Time-tested recipes passed down through generations"
     },
     "product": {
         "price": "Price",
         "order_now": "Order Now",
         "featured": "Featured",
-        "view_details": "View Details"
+        "view_details": "View Details",
+        "view_all": "View All Products",
+        "not_found": "Product Not Found",
+        "back_to_menu": "Back to Menu",
+        "product_details": "Product Details",
+        "category": "Category",
+        "availability": "Availability",
+        "in_stock": "In Stock",
+        "fresh_baked": "Fresh Baked",
+        "daily": "Daily",
+        "contact_for_order": "Contact us to place your order",
+        "related_products": "You May Also Like"
+    },
+    "menu": {
+        "title": "Our Menu",
+        "subtitle": "Explore our delicious selection of baked goods",
+        "all_categories": "All",
+        "search_placeholder": "Search products...",
+        "no_results": "No products found",
+        "no_results_desc": "Try adjusting your search or filter",
+        "showing_results": "Showing {count} products",
+        "clear_filters": "Clear All Filters",
+        "categories": {
+            "all": "All",
+            "cakes": "Cakes",
+            "breads": "Breads",
+            "pastries": "Pastries",
+            "cookies": "Cookies",
+            "savory": "Savory"
+        }
+    },
+    "about": {
+        "hero_title": "Our Story",
+        "hero_subtitle": "A journey of passion, tradition, and the love of baking that brings joy to every home",
+        "story_title": "How It All Began",
+        "story_paragraph1": "Gurudev Bakery was founded with a simple dream: to bring the warmth and joy of freshly baked goods to every family. What started as a small neighborhood bakery has grown into a beloved community institution.",
+        "story_paragraph2": "For over two decades, we have been committed to preserving traditional baking methods while embracing innovation. Our recipes have been perfected over time, combining age-old techniques with modern flavors.",
+        "story_paragraph3": "Today, we continue to honor our roots while serving our community with the same dedication and passion that inspired us from the very beginning.",
+        "mission_title": "Our Mission",
+        "mission_description": "To create moments of joy and connection through exceptional baked goods, made with the finest ingredients and crafted with care. We believe that every product we bake has the power to bring people together and create lasting memories.",
+        "values_title": "Our Values",
+        "values_subtitle": "The principles that guide everything we do",
+        "values": {
+            "quality": {
+                "title": "Quality First",
+                "description": "We never compromise on the quality of our ingredients or our baking process. Every product meets our highest standards."
+            },
+            "fresh": {
+                "title": "Always Fresh",
+                "description": "Everything is baked fresh daily, ensuring you get the best taste and texture in every bite."
+            },
+            "community": {
+                "title": "Community Focus",
+                "description": "We're more than a bakery – we're part of your community, supporting local suppliers and events."
+            },
+            "excellence": {
+                "title": "Pursuit of Excellence",
+                "description": "We constantly refine our recipes and techniques to deliver exceptional products that exceed expectations."
+            },
+            "tradition": {
+                "title": "Honoring Tradition",
+                "description": "Our recipes honor time-tested baking traditions while embracing modern tastes and preferences."
+            },
+            "trust": {
+                "title": "Built on Trust",
+                "description": "Transparency and integrity in everything we do has earned us the trust of generations of customers."
+            }
+        },
+        "team_title": "Meet Our Team",
+        "team_subtitle": "The talented people behind your favorite baked goods",
+        "team": {
+            "member1": {
+                "name": "Deepak Belhekar",
+                "role": "Founder & Master Baker",
+                "bio": "With 30 years of experience, Deepak's passion for baking continues to inspire our entire team."
+            },
+            "member2": {
+                "name": "Ganesh Belhekar",
+                "role": "Head Baker",
+                "bio": "Ganesh brings creativity and precision to every recipe, ensuring consistency and quality."
+            },
+            "member3": {
+                "name": "Rani Belhekar",
+                "role": "Pastry Chef",
+                "bio": "Rani's artistic touch transforms simple ingredients into beautiful and delicious creations."
+            },
+            "member4": {
+                "name": "Priyanka Belhekar",
+                "role": "Operations Manager",
+                "bio": "Priyanka ensures smooth operations and that every customer has a wonderful experience."
+            }
+        }
     },
     "contact": {
         "title": "Get in Touch",
+        "subtitle": "Have questions? We'd love to hear from you",
         "name": "Name",
         "email": "Email",
+        "phone": "Phone",
         "message": "Message",
         "submit": "Send Message",
-        "success": "Message sent successfully!"
+        "success": "Message sent successfully!",
+        "captcha_label": "Security Verification",
+        "captcha_error": "Incorrect answer. Please try again.",
+        "captcha_refresh": "New Question",
+        "captcha_help": "Please solve the math problem above to verify you're human",
+        "address": "Address",
+        "hours": "Business Hours",
+        "hours_weekdays": "Monday - Saturday: 7:00 AM - 9:00 PM",
+        "hours_sunday": "Sunday: 8:00 AM - 8:00 PM"
+    },
+    "footer": {
+        "about_us": "About Us",
+        "quick_links": "Quick Links",
+        "contact_us": "Contact Us",
+        "follow_us": "Follow Us",
+        "all_rights_reserved": "All rights reserved"
     }
 }

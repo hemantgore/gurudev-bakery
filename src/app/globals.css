@@ -8,8 +8,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-geist-sans), var(--font-noto-sans-devanagari);
   --font-mono: var(--font-geist-mono);
+  --font-devanagari: var(--font-noto-sans-devanagari);
 }
 
 @media (prefers-color-scheme: dark) {
