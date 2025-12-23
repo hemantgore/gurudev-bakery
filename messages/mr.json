@@ -58,9 +58,9 @@
             "all": "सर्व",
             "cakes": "केक",
             "breads": "ब्रेड",
-            "pastries": "पेस्ट्री",
-            "cookies": "कुकीज",
-            "savory": "चवदार"
+            "biscuits": "बिस्कीट",
+            "khari": "खारी",
+            "sweets": "मिठाई"
         }
     },
     "about": {

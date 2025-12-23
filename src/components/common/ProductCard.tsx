@@ -31,9 +31,9 @@ export default function ProductCard({ product }: ProductCardProps) {
                     <span className="text-6xl">
                         {product.category === 'cakes' && '🎂'}
                         {product.category === 'breads' && '🍞'}
-                        {product.category === 'pastries' && '🥐'}
-                        {product.category === 'cookies' && '🍪'}
-                        {product.category === 'savory' && '🥟'}
+                        {product.category === 'biscuits' && '🍪'}
+                        {product.category === 'khari' && '🥟'}
+                        {product.category === 'sweets' && '🧁'}
                     </span>
                 </div>
 

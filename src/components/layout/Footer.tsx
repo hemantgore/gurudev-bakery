@@ -18,7 +18,7 @@ export default function Footer() {
                     {/* Brand Column */}
                     <div>
                         <h3 className="text-2xl font-bold text-white mb-4">
-                            Beakey Bakery
+                            Gurudev Bakery
                         </h3>
                         <p className="text-zinc-400 mb-4">
                             Serving delicious, handcrafted baked goods made with love.

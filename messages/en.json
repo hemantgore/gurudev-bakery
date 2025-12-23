@@ -58,9 +58,9 @@
             "all": "All",
             "cakes": "Cakes",
             "breads": "Breads",
-            "pastries": "Pastries",
-            "cookies": "Cookies",
-            "savory": "Savory"
+            "biscuits": "Biscuits",
+            "khari": "Khari",
+            "sweets": "Sweets"
         }
     },
     "about": {
