@@ -103,19 +103,6 @@ export const products: Product[] = [
         image: '/images/milk-bread.jpg',
         featured: true,
     },
-
-    // Pastries
-    {
-        id: 9,
-        name: 'Pineapple Pastry',
-        nameMr: 'पाइनॲपल पेस्ट्री',
-        description: 'Sweet pineapple pastry with cream',
-        descriptionMr: 'क्रीमसह गोड पाइनॲपल पेस्ट्री',
-        price: 80,
-        category: 'pastries',
-        image: '/images/pineapple-pastry.jpg',
-        featured: true,
-    },
     {
         id: 10,
         name: 'Jeera Butter',

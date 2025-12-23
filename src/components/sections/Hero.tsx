@@ -1,62 +1,84 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from '@/i18n/routing';
 import { ArrowRight } from 'lucide-react';
+import { useRef } from 'react';
 
 export default function Hero() {
     const t = useTranslations('home');
+    const ref = useRef<HTMLDivElement>(null);
+    const { scrollYProgress } = useScroll({
+        target: ref,
+        offset: ["start start", "end start"]
+    });
+
+    const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
+    const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.3]);
 
     return (
-        <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 dark:from-zinc-900 dark:via-zinc-800 dark:to-zinc-900 overflow-hidden">
-            {/* Decorative background elements */}
-            <div className="absolute inset-0 overflow-hidden">
-                <div className="absolute -top-40 -right-40 w-80 h-80 bg-amber-200/30 dark:bg-amber-500/10 rounded-full blur-3xl" />
-                <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-orange-200/30 dark:bg-orange-500/10 rounded-full blur-3xl" />
-            </div>
+        <section
+            ref={ref}
+            className="relative min-h-screen flex items-center justify-center overflow-hidden"
+        >
+            {/* Background Image with Parallax */}
+            <motion.div
+                style={{ y, opacity }}
+                className="absolute inset-0 z-0"
+            >
+                <div
+                    className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                    style={{
+                        backgroundImage: 'url(/images/hero-bakery-bg.jpg)'
+                    }}
+                />
+                {/* Dark overlay for better text readability */}
+                <div className="absolute inset-0 bg-black/40" />
+            </motion.div>
 
+            {/* Content */}
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="max-w-4xl mx-auto text-center">
                     {/* Hero Title */}
                     <motion.h1
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6 }}
-                        className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-zinc-900 dark:text-zinc-50 mb-6 leading-tight"
+                        transition={{ duration: 0.8 }}
+                        className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight drop-shadow-2xl"
                     >
                         {t('hero_title')}
                     </motion.h1>
 
                     {/* Hero Subtitle */}
                     <motion.p
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
-                        className="text-xl sm:text-2xl md:text-3xl text-amber-700 dark:text-amber-400 font-medium mb-4"
+                        transition={{ duration: 0.8, delay: 0.2 }}
+                        className="text-xl sm:text-2xl md:text-3xl text-amber-200 font-medium mb-4 drop-shadow-lg"
                     >
                         {t('hero_subtitle')}
                     </motion.p>
 
                     {/* Hero Description */}
                     <motion.p
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.4 }}
-                        className="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 mb-8 max-w-2xl mx-auto"
+                        transition={{ duration: 0.8, delay: 0.4 }}
+                        className="text-base sm:text-lg text-gray-200 mb-8 max-w-2xl mx-auto drop-shadow-md"
                     >
                         {t('hero_description')}
                     </motion.p>
 
                     {/* CTA Button */}
                     <motion.div
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.6 }}
+                        transition={{ duration: 0.8, delay: 0.6 }}
                     >
                         <Link
                             href="/menu"
-                            className="inline-flex items-center gap-2 px-8 py-4 bg-amber-600 hover:bg-amber-700 dark:bg-amber-500 dark:hover:bg-amber-600 text-white font-semibold rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+                            className="inline-flex items-center gap-2 px-8 py-4 bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-full transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-amber-500/25"
                         >
                             {t('cta_button')}
                             <ArrowRight className="w-5 h-5" />
@@ -75,9 +97,9 @@ export default function Hero() {
                 <motion.div
                     animate={{ y: [0, 10, 0] }}
                     transition={{ duration: 1.5, repeat: Infinity }}
-                    className="w-6 h-10 border-2 border-amber-600 dark:border-amber-400 rounded-full flex items-start justify-center p-2"
+                    className="w-6 h-10 border-2 border-white/80 rounded-full flex items-start justify-center p-2"
                 >
-                    <div className="w-1.5 h-1.5 bg-amber-600 dark:bg-amber-400 rounded-full" />
+                    <div className="w-1.5 h-1.5 bg-white/80 rounded-full" />
                 </motion.div>
             </motion.div>
         </section>

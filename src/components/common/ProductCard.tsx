@@ -25,16 +25,31 @@ export default function ProductCard({ product }: ProductCardProps) {
         >
             {/* Product Image */}
             <div className="relative aspect-square bg-zinc-200 dark:bg-zinc-700 overflow-hidden">
-                {/* Placeholder gradient - replace with actual images */}
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-200 to-orange-300 dark:from-amber-600 dark:to-orange-700" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-6xl">
-                        {product.category === 'cakes' && '🎂'}
-                        {product.category === 'breads' && '🍞'}
-                        {product.category === 'biscuits' && '🍪'}
-                        {product.category === 'khari' && '🥟'}
-                        {product.category === 'sweets' && '🧁'}
-                    </span>
+                {/* Actual product image */}
+                <img
+                    src={product.image}
+                    alt={productName}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    onError={(e) => {
+                        // Fallback to placeholder gradient if image fails to load
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        const fallback = target.nextElementSibling as HTMLElement;
+                        if (fallback) fallback.style.display = 'block';
+                    }}
+                />
+
+                {/* Fallback placeholder gradient */}
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-200 to-orange-300 dark:from-amber-600 dark:to-orange-700" style={{ display: 'none' }}>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                        <span className="text-6xl">
+                            {product.category === 'cakes' && '🎂'}
+                            {product.category === 'breads' && '🍞'}
+                            {product.category === 'biscuits' && '🍪'}
+                            {product.category === 'khari' && '🥟'}
+                            {product.category === 'sweets' && '🧁'}
+                        </span>
+                    </div>
                 </div>
 
                 {/* Featured badge */}
