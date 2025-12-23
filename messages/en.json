@@ -1,0 +1,33 @@
+{
+    "nav": {
+        "home": "Home",
+        "menu": "Menu",
+        "about": "About",
+        "contact": "Contact"
+    },
+    "common": {
+        "loading": "Loading...",
+        "error": "Something went wrong",
+        "currency": "₹"
+    },
+    "home": {
+        "hero_title": "Welcome to Beakey Bakery",
+        "hero_subtitle": "Fresh baked goods daily",
+        "cta_button": "View Menu",
+        "featured_products": "Featured Products"
+    },
+    "product": {
+        "price": "Price",
+        "order_now": "Order Now",
+        "featured": "Featured",
+        "view_details": "View Details"
+    },
+    "contact": {
+        "title": "Get in Touch",
+        "name": "Name",
+        "email": "Email",
+        "message": "Message",
+        "submit": "Send Message",
+        "success": "Message sent successfully!"
+    }
+}
