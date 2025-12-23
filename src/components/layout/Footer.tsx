@@ -110,7 +110,7 @@ export default function Footer() {
                                     rel="noopener noreferrer"
                                     className="text-sm hover:text-amber-400 transition-colors duration-300"
                                 >
-                                    Chimbhala Rd, Belwandi, Belwandi Bk., Maharashtra 413702
+                                    {tContact('address_full')}
                                 </a>
                             </li>
                             <li className="flex items-center gap-3">

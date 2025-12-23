@@ -289,7 +289,7 @@ export default function ContactPage() {
                                             rel="noopener noreferrer"
                                             className="text-zinc-600 dark:text-zinc-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
                                         >
-                                            Chimbhala Rd, Belwandi, Belwandi Bk., Maharashtra 413702
+                                            {t('address_full')}
                                         </a>
                                     </div>
                                 </div>
