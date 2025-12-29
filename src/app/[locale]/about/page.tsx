@@ -108,11 +108,13 @@ export default function AboutPage() {
                             {/* Image */}
                             <motion.div
                                 variants={fadeInUp}
-                                className="relative aspect-square lg:aspect-[4/3] rounded-3xl overflow-hidden bg-gradient-to-br from-amber-200 to-orange-300 dark:from-amber-800 dark:to-orange-900"
+                                className="relative aspect-square lg:aspect-[4/3] rounded-3xl overflow-hidden"
                             >
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                    <span className="text-9xl">🏪</span>
-                                </div>
+                                <img
+                                    src="/images/bakery-story.jpg"
+                                    alt={t('story_title')}
+                                    className="w-full h-full object-cover"
+                                />
                             </motion.div>
 
                             {/* Story Content */}

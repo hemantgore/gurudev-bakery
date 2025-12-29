@@ -40,8 +40,12 @@ export default function AboutSnippet() {
                             transition={{ duration: 0.6 }}
                             className="relative"
                         >
-                            <div className="aspect-square bg-gradient-to-br from-amber-200 to-orange-300 dark:from-amber-600 dark:to-orange-700 rounded-3xl shadow-2xl flex items-center justify-center">
-                                <span className="text-9xl">🥖</span>
+                            <div className="aspect-square rounded-3xl shadow-2xl overflow-hidden">
+                                <img
+                                    src="/images/about-bakery.jpg"
+                                    alt={t('about_title')}
+                                    className="w-full h-full object-cover"
+                                />
                             </div>
                             {/* Decorative element */}
                             <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-amber-300 dark:bg-amber-500 rounded-full opacity-20 blur-2xl" />
