@@ -138,8 +138,16 @@
         "captcha_error": "Incorrect answer. Please try again.",
         "captcha_refresh": "New Question",
         "captcha_help": "Please solve the math problem above to verify you're human",
+        "validation": {
+            "name_min": "Name must be at least 2 characters",
+            "email_invalid": "Invalid email address",
+            "phone_invalid": "Phone must be in format: +91 XXXXXXXXXX",
+            "message_min": "Message must be at least 10 characters",
+            "captcha_required": "Please solve the math problem"
+        },
         "address": "Address",
         "address_full": "Chimbhala Rd, Belwandi, Belwandi Bk., Maharashtra 413702",
+        "phone_number": "+91 83800 60631",
         "hours": "Business Hours",
         "hours_weekdays": "Monday - Saturday: 7:00 AM - 9:00 PM",
         "hours_sunday": "Sunday: 8:00 AM - 8:00 PM"

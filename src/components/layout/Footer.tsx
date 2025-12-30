@@ -119,7 +119,7 @@ export default function Footer() {
                                     href="tel:+918380060631"
                                     className="text-sm hover:text-amber-400 transition-colors duration-300"
                                 >
-                                    +91 83800 60631
+                                    {tContact('phone_number')}
                                 </a>
                             </li>
                             <li className="flex items-center gap-3">

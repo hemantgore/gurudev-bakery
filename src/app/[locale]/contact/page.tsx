@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
 import Footer from '@/components/layout/Footer';
 
@@ -33,22 +33,33 @@ const generateCaptcha = () => {
     return { question, answer };
 };
 
-// Form validation schema
-const contactSchema = z.object({
-    name: z.string().min(2, 'Name must be at least 2 characters'),
-    email: z.string().email('Invalid email address'),
-    phone: z.string().regex(/^\+91\s?\d{10}$/, 'Phone must be in format: +91 XXXXXXXXXX'),
-    message: z.string().min(10, 'Message must be at least 10 characters'),
-    captcha: z.string().min(1, 'Please solve the math problem'),
-});
-
-type ContactFormData = z.infer<typeof contactSchema>;
+type ContactFormData = {
+    name: string;
+    email: string;
+    phone: string;
+    message: string;
+    captcha: string;
+};
 
 export default function ContactPage() {
     const t = useTranslations('contact');
+
+    // Form validation schema with localized messages
+    const contactSchema = z.object({
+        name: z.string().min(2, t('validation.name_min')),
+        email: z.string().email(t('validation.email_invalid')),
+        phone: z.string().regex(/^\+91\s?\d{10}$/, t('validation.phone_invalid')),
+        message: z.string().min(10, t('validation.message_min')),
+        captcha: z.string().min(1, t('validation.captcha_required')),
+    });
     const [isSubmitted, setIsSubmitted] = useState(false);
-    const [captcha, setCaptcha] = useState(generateCaptcha);
+    const [captcha, setCaptcha] = useState({ question: '', answer: 0 });
     const [captchaError, setCaptchaError] = useState('');
+
+    // Generate captcha only on client side to avoid hydration mismatch
+    useEffect(() => {
+        setCaptcha(generateCaptcha());
+    }, []);
 
     const {
         register,
@@ -216,9 +227,13 @@ export default function ContactPage() {
                                             {t('captcha_label')}
                                         </label>
                                         <div className="flex items-center gap-4 mb-2">
-                                            <div className="bg-zinc-100 dark:bg-zinc-600 px-4 py-3 rounded-lg font-mono text-lg font-semibold text-zinc-900 dark:text-zinc-100 min-w-[120px] text-center">
-                                                {captcha.question} = ?
+                                            <div
+                                                className="bg-zinc-100 dark:bg-zinc-600 px-4 py-3 rounded-lg font-mono text-lg font-semibold text-zinc-900 dark:text-zinc-100 min-w-[120px] text-center"
+                                                suppressHydrationWarning
+                                            >
+                                                {captcha.question || '...'}
                                             </div>
+                                            <span className="text-2xl font-semibold text-zinc-700 dark:text-zinc-300">=</span>
                                             <input
                                                 {...register('captcha')}
                                                 type="text"
@@ -307,7 +322,7 @@ export default function ContactPage() {
                                             href="tel:+918380060631"
                                             className="text-zinc-600 dark:text-zinc-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
                                         >
-                                            +91 83800 60631
+                                            {t('phone_number')}
                                         </a>
                                     </div>
                                 </div>
