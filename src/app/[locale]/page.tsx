@@ -1,5 +1,6 @@
 import Hero from '@/components/sections/Hero';
 import FeaturedProducts from '@/components/sections/FeaturedProducts';
+import GoogleReviews from '@/components/sections/GoogleReviews';
 import AboutSnippet from '@/components/sections/AboutSnippet';
 import Footer from '@/components/layout/Footer';
 
@@ -9,6 +10,7 @@ export default function Home() {
             <Hero />
             <FeaturedProducts />
             <AboutSnippet />
+            <GoogleReviews />
             <Footer />
         </>
     );

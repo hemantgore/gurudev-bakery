@@ -158,5 +158,11 @@
         "contact_us": "आमच्याशी संपर्क साधा",
         "follow_us": "आम्हाला फॉलो करा",
         "all_rights_reserved": "सर्व हक्क राखीव"
+    },
+    "reviews": {
+        "title": "आमचे ग्राहक काय म्हणतात",
+        "based_on": "आधारित",
+        "google_reviews": "Google पुनरावलोकने",
+        "view_all_reviews": "Google वर सर्व पुनरावलोकने पहा"
     }
 }

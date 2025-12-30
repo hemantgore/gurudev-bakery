@@ -158,5 +158,11 @@
         "contact_us": "Contact Us",
         "follow_us": "Follow Us",
         "all_rights_reserved": "All rights reserved"
+    },
+    "reviews": {
+        "title": "What Our Customers Say",
+        "based_on": "Based on",
+        "google_reviews": "Google Reviews",
+        "view_all_reviews": "View All Reviews on Google"
     }
 }
