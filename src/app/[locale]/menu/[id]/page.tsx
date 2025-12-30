@@ -167,10 +167,13 @@ export default function ProductDetailPage() {
                             </div>
 
                             {/* CTA Button */}
-                            <button className="w-full bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 flex items-center justify-center gap-3 shadow-lg hover:shadow-xl">
+                            <a
+                                href="tel:+918380060631"
+                                className="w-full bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 flex items-center justify-center gap-3 shadow-lg hover:shadow-xl"
+                            >
                                 <ShoppingCart className="w-5 h-5" />
                                 {t('order_now')}
-                            </button>
+                            </a>
 
                             {/* Additional Info */}
                             <p className="mt-4 text-sm text-zinc-500 dark:text-zinc-400 text-center">
