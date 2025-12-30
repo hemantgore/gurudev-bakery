@@ -1,6 +1,6 @@
 'use client';
 
-import { Link } from '@/i18n/routing';
+import { Link, usePathname } from '@/i18n/routing';
 import { useTranslations } from 'next-intl';
 import LanguageSwitcher from '@/components/common/LanguageSwitcher';
 import { Menu, X } from 'lucide-react';
@@ -8,6 +8,7 @@ import { useState } from 'react';
 
 export default function Header() {
     const t = useTranslations('nav');
+    const pathname = usePathname();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     const navItems = [
@@ -28,15 +29,21 @@ export default function Header() {
 
                     {/* Desktop Navigation */}
                     <div className="hidden md:flex items-center gap-8">
-                        {navItems.map((item) => (
-                            <Link
-                                key={item.href}
-                                href={item.href}
-                                className="text-zinc-700 dark:text-zinc-300 hover:text-amber-600 dark:hover:text-amber-400 font-medium transition-colors duration-300"
-                            >
-                                {item.label}
-                            </Link>
-                        ))}
+                        {navItems.map((item) => {
+                            const isActive = pathname === item.href;
+                            return (
+                                <Link
+                                    key={item.href}
+                                    href={item.href}
+                                    className={`font-medium transition-colors duration-300 ${isActive
+                                            ? 'text-amber-600 dark:text-amber-400 border-b-2 border-amber-600 dark:border-amber-400 pb-1'
+                                            : 'text-zinc-700 dark:text-zinc-300 hover:text-amber-600 dark:hover:text-amber-400'
+                                        }`}
+                                >
+                                    {item.label}
+                                </Link>
+                            );
+                        })}
                     </div>
 
                     {/* Right Side: Language Switcher + Mobile Menu Button */}
@@ -58,16 +65,22 @@ export default function Header() {
                 {mobileMenuOpen && (
                     <div className="md:hidden py-4 border-t border-zinc-200 dark:border-zinc-800">
                         <div className="flex flex-col gap-4">
-                            {navItems.map((item) => (
-                                <Link
-                                    key={item.href}
-                                    href={item.href}
-                                    onClick={() => setMobileMenuOpen(false)}
-                                    className="text-zinc-700 dark:text-zinc-300 hover:text-amber-600 dark:hover:text-amber-400 font-medium transition-colors duration-300 py-2"
-                                >
-                                    {item.label}
-                                </Link>
-                            ))}
+                            {navItems.map((item) => {
+                                const isActive = pathname === item.href;
+                                return (
+                                    <Link
+                                        key={item.href}
+                                        href={item.href}
+                                        onClick={() => setMobileMenuOpen(false)}
+                                        className={`font-medium transition-colors duration-300 py-2 ${isActive
+                                                ? 'text-amber-600 dark:text-amber-400 border-l-4 border-amber-600 dark:border-amber-400 pl-4'
+                                                : 'text-zinc-700 dark:text-zinc-300 hover:text-amber-600 dark:hover:text-amber-400'
+                                            }`}
+                                    >
+                                        {item.label}
+                                    </Link>
+                                );
+                            })}
                         </div>
                     </div>
                 )}
