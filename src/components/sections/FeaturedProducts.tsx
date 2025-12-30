@@ -1,10 +1,11 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { motion } from 'framer-motion';
 import { Link } from '@/i18n/routing';
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
+import { formatPrice } from '@/lib/utils';
 
 // Mock featured products data - will be replaced with CMS data later
 const mockProducts = [
@@ -41,8 +42,7 @@ const mockProducts = [
 export default function FeaturedProducts() {
     const t = useTranslations('home');
     const tProduct = useTranslations('product');
-    const tCommon = useTranslations('common');
-
+    const tCommon = useTranslations('common'); const locale = useLocale();
     const containerVariants = {
         hidden: { opacity: 0 },
         visible: {
@@ -135,7 +135,7 @@ export default function FeaturedProducts() {
                                 </h3>
                                 <div className="flex items-center justify-between mb-4">
                                     <span className="text-xl sm:text-2xl font-bold text-amber-600 dark:text-amber-400">
-                                        {tCommon('currency')}{product.price}
+                                        {tCommon('currency')}{formatPrice(product.price, locale)}
                                     </span>
                                 </div>
                                 <Link

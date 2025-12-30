@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, ShoppingCart, Tag } from 'lucide-react';
 import { Link } from '@/i18n/routing';
 import ProductCard from '@/components/common/ProductCard';
+import { formatPrice } from '@/lib/utils';
 
 export default function ProductDetailPage() {
     const params = useParams();
@@ -134,7 +135,7 @@ export default function ProductDetailPage() {
                                         {t('price')}:
                                     </span>
                                     <span className="text-3xl font-bold text-amber-600 dark:text-amber-400">
-                                        ₹{product.price}
+                                        ₹{formatPrice(product.price, locale)}
                                     </span>
                                 </div>
                             </div>

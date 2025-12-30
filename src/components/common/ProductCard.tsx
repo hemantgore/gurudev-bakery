@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Link } from '@/i18n/routing';
 import { ArrowRight } from 'lucide-react';
 import type { Product } from '@/lib/products';
+import { formatPrice } from '@/lib/utils';
 
 interface ProductCardProps {
     product: Product;
@@ -75,7 +76,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                     </p>
                     <div className="flex items-center justify-between mb-4">
                         <span className="text-xl sm:text-2xl font-bold text-amber-600 dark:text-amber-400">
-                            {tCommon('currency')}{product.price}
+                            {tCommon('currency')}{formatPrice(product.price, locale)}
                         </span>
                     </div>
                     <div className="inline-flex items-center gap-2 text-amber-600 dark:text-amber-400 font-medium group-hover:gap-3 transition-all duration-300">
