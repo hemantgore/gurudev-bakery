@@ -129,10 +129,10 @@ export default function GoogleReviews() {
                                 <Star
                                     key={star}
                                     className={`w-6 h-6 ${star <= Math.floor(averageRating)
-                                            ? 'fill-amber-500 text-amber-500'
-                                            : star - 0.5 <= averageRating
-                                                ? 'fill-amber-500/50 text-amber-500'
-                                                : 'fill-zinc-300 text-zinc-300 dark:fill-zinc-600 dark:text-zinc-600'
+                                        ? 'fill-amber-500 text-amber-500'
+                                        : star - 0.5 <= averageRating
+                                            ? 'fill-amber-500/50 text-amber-500'
+                                            : 'fill-zinc-300 text-zinc-300 dark:fill-zinc-600 dark:text-zinc-600'
                                         }`}
                                 />
                             ))}
@@ -153,10 +153,10 @@ export default function GoogleReviews() {
                 </div>
 
                 {/* Carousel Container */}
-                <div className="relative">
+                <div className="relative px-1">
                     {/* Carousel Viewport */}
-                    <div className="overflow-hidden" ref={emblaRef}>
-                        <div className="flex gap-6">
+                    <div className="overflow-hidden -mx-3" ref={emblaRef}>
+                        <div className="flex">
                             {reviews.map((review, index) => (
                                 <motion.div
                                     key={review.id}
@@ -164,7 +164,7 @@ export default function GoogleReviews() {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ duration: 0.5, delay: index * 0.1 }}
-                                    className="flex-[0_0_100%] min-w-0 sm:flex-[0_0_50%] lg:flex-[0_0_33.333%]"
+                                    className="flex-[0_0_100%] min-w-0 sm:flex-[0_0_50%] lg:flex-[0_0_33.333%] px-3"
                                 >
                                     <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-zinc-800 dark:to-zinc-800/50 rounded-2xl shadow-lg p-6 h-full hover:shadow-xl transition-shadow duration-300 border border-zinc-200 dark:border-zinc-700">
                                         {/* Rating Stars */}
@@ -173,8 +173,8 @@ export default function GoogleReviews() {
                                                 <Star
                                                     key={star}
                                                     className={`w-5 h-5 ${star <= review.rating
-                                                            ? 'fill-amber-500 text-amber-500'
-                                                            : 'fill-zinc-300 text-zinc-300 dark:fill-zinc-600 dark:text-zinc-600'
+                                                        ? 'fill-amber-500 text-amber-500'
+                                                        : 'fill-zinc-300 text-zinc-300 dark:fill-zinc-600 dark:text-zinc-600'
                                                         }`}
                                                 />
                                             ))}
