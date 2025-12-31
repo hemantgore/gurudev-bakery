@@ -9,6 +9,8 @@ import { Link } from '@/i18n/routing';
 import Image from 'next/image';
 import ProductCard from '@/components/common/ProductCard';
 import { formatPrice } from '@/lib/utils';
+import { getProductSchema, getBreadcrumbSchema } from '@/lib/structured-data';
+import { useEffect } from 'react';
 
 export default function ProductDetailPage() {
     const params = useParams();
@@ -44,6 +46,40 @@ export default function ProductDetailPage() {
     const relatedProducts = products
         .filter((p) => p.category === product.category && p.id !== product.id)
         .slice(0, 4);
+
+    // Add structured data to page
+    useEffect(() => {
+        if (product) {
+            const productSchema = getProductSchema({
+                name: productName || '',
+                description: productDescription || '',
+                price: product.price,
+                image: product.image,
+            });
+
+            const breadcrumbSchema = getBreadcrumbSchema([
+                { name: 'Home', url: '/' },
+                { name: 'Menu', url: '/menu' },
+                { name: productName || '', url: `/menu/${product.id}` },
+            ]);
+
+            // Add schemas to head
+            const script1 = document.createElement('script');
+            script1.type = 'application/ld+json';
+            script1.text = JSON.stringify(productSchema);
+            document.head.appendChild(script1);
+
+            const script2 = document.createElement('script');
+            script2.type = 'application/ld+json';
+            script2.text = JSON.stringify(breadcrumbSchema);
+            document.head.appendChild(script2);
+
+            return () => {
+                document.head.removeChild(script1);
+                document.head.removeChild(script2);
+            };
+        }
+    }, [product, productName, productDescription]);
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-zinc-50 to-white dark:from-zinc-950 dark:to-zinc-900">
