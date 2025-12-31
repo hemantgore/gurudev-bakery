@@ -89,43 +89,41 @@ export default function FeaturedProducts() {
                     className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8"
                 >
                     {mockProducts.map((product) => (
-                        <motion.div
-                            key={product.id}
-                            variants={itemVariants}
-                            whileHover={{ y: -8 }}
-                            className="group bg-zinc-50 dark:bg-zinc-800 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300"
-                        >
-                            {/* Product Image */}
-                            <div className="relative aspect-square bg-zinc-200 dark:bg-zinc-700 overflow-hidden">
-                                <Image
-                                    src={product.image}
-                                    alt={locale === 'mr' ? product.nameMr : product.name}
-                                    fill
-                                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                                    className="object-cover"
-                                    loading="lazy"
-                                />
-                            </div>
-
-                            {/* Product Info */}
-                            <div className="p-4 sm:p-5">
-                                <h3 className="text-lg sm:text-xl font-semibold text-zinc-900 dark:text-zinc-50 mb-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
-                                    {locale === 'mr' ? product.nameMr : product.name}
-                                </h3>
-                                <div className="flex items-center justify-between mb-4">
-                                    <span className="text-xl sm:text-2xl font-bold text-amber-600 dark:text-amber-400">
-                                        {tCommon('currency')}{formatPrice(product.price, locale)}
-                                    </span>
+                        <Link key={product.id} href={`/menu/${product.id}`}>
+                            <motion.div
+                                variants={itemVariants}
+                                whileHover={{ y: -8 }}
+                                className="group bg-zinc-50 dark:bg-zinc-800 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer"
+                            >
+                                {/* Product Image */}
+                                <div className="relative aspect-square bg-zinc-200 dark:bg-zinc-700 overflow-hidden">
+                                    <Image
+                                        src={product.image}
+                                        alt={locale === 'mr' ? product.nameMr : product.name}
+                                        fill
+                                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                                        className="object-cover"
+                                        loading="lazy"
+                                    />
                                 </div>
-                                <Link
-                                    href={`/menu/${product.id}`}
-                                    className="inline-flex items-center gap-2 text-amber-600 dark:text-amber-400 font-medium hover:gap-3 transition-all duration-300"
-                                >
-                                    {tProduct('view_details')}
-                                    <ArrowRight className="w-4 h-4" />
-                                </Link>
-                            </div>
-                        </motion.div>
+
+                                {/* Product Info */}
+                                <div className="p-4 sm:p-5">
+                                    <h3 className="text-lg sm:text-xl font-semibold text-zinc-900 dark:text-zinc-50 mb-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                                        {locale === 'mr' ? product.nameMr : product.name}
+                                    </h3>
+                                    <div className="flex items-center justify-between mb-4">
+                                        <span className="text-xl sm:text-2xl font-bold text-amber-600 dark:text-amber-400">
+                                            {tCommon('currency')}{formatPrice(product.price, locale)}
+                                        </span>
+                                    </div>
+                                    <div className="inline-flex items-center gap-2 text-amber-600 dark:text-amber-400 font-medium group-hover:gap-3 transition-all duration-300">
+                                        {tProduct('view_details')}
+                                        <ArrowRight className="w-4 h-4" />
+                                    </div>
+                                </div>
+                            </motion.div>
+                        </Link>
                     ))}
                 </motion.div>
 
