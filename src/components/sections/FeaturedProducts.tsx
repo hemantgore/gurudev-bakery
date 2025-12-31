@@ -10,32 +10,25 @@ import { formatPrice } from '@/lib/utils';
 // Mock featured products data - will be replaced with CMS data later
 const mockProducts = [
     {
-        id: 1,
+        id: 20,
         name: 'Chocolate Cake',
         nameMr: 'चॉकलेट केक',
         price: 350,
-        image: '/images/placeholder-cake.jpg',
+        image: '/images/chocolate-cake.jpg',
     },
     {
-        id: 2,
-        name: 'Fresh Bread',
-        nameMr: 'ताजी ब्रेड',
+        id: 8,
+        name: 'Milk Bread',
+        nameMr: 'मिल्क ब्रेड',
         price: 40,
-        image: '/images/placeholder-bread.jpg',
+        image: '/images/milk-bread.jpg',
     },
     {
-        id: 3,
-        name: 'Cookies',
-        nameMr: 'कुकीज',
-        price: 150,
-        image: '/images/placeholder-cookies.jpg',
-    },
-    {
-        id: 4,
-        name: 'Pastries',
-        nameMr: 'पेस्ट्री',
-        price: 80,
-        image: '/images/placeholder-pastry.jpg',
+        id: 1,
+        name: 'Nargees Khari',
+        nameMr: 'नर्गिस खारी',
+        price: 25,
+        image: '/images/nargees-khari.jpg',
     },
 ];
 
@@ -131,7 +124,7 @@ export default function FeaturedProducts() {
                             {/* Product Info */}
                             <div className="p-4 sm:p-5">
                                 <h3 className="text-lg sm:text-xl font-semibold text-zinc-900 dark:text-zinc-50 mb-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
-                                    {product.name}
+                                    {locale === 'mr' ? product.nameMr : product.name}
                                 </h3>
                                 <div className="flex items-center justify-between mb-4">
                                     <span className="text-xl sm:text-2xl font-bold text-amber-600 dark:text-amber-400">
