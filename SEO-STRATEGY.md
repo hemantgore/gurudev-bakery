@@ -344,7 +344,7 @@ Add prominent info block on every page footer:
 ```html
 <aside class="business-info">
   <h3>Visit Gurudev Bakery</h3>
-  <p><strong>Address:</strong> [Full address], Belwandi, Maharashtra, Maharashtra 400001</p>
+  <p><strong>Address:</strong> [Full address], Belwandi, Maharashtra, Maharashtra 413702</p>
   <p><strong>Phone:</strong> +91 83800 60631</p>
   <p><strong>Email:</strong> info@gurudevbakery.com</p>
   <p><strong>Hours:</strong> Mon-Sat 7AM-9PM, Sun 8AM-8PM</p>

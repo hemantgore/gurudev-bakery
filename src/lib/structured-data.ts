@@ -74,16 +74,16 @@ export function getLocalBusinessSchema(): LocalBusiness {
         ],
         address: {
             '@type': 'PostalAddress',
-            streetAddress: 'Belwandi Road',
-            addressLocality: 'Maharashtra',
+            streetAddress: 'Chimbhala Rd',
+            addressLocality: 'Belwandi Bk',
             addressRegion: 'Maharashtra',
-            postalCode: '400001',
+            postalCode: '413702',
             addressCountry: 'IN',
         },
         geo: {
             '@type': 'GeoCoordinates',
-            latitude: 19.0760,
-            longitude: 72.8777,
+            latitude: 18.7050,
+            longitude: 74.5824,
         },
         openingHoursSpecification: [
             {
