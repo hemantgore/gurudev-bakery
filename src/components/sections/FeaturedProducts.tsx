@@ -97,28 +97,14 @@ export default function FeaturedProducts() {
                         >
                             {/* Product Image */}
                             <div className="relative aspect-square bg-zinc-200 dark:bg-zinc-700 overflow-hidden">
-                                {/* Actual product image */}
-                                <img
+                                <Image
                                     src={product.image}
-                                    alt={product.name}
-                                    className="absolute inset-0 w-full h-full object-cover"
-                                    onLoad={(e) => {
-                                        const target = e.target as HTMLImageElement;
-                                        const fallback = target.parentElement?.querySelector('.fallback-placeholder') as HTMLElement;
-                                        if (fallback) fallback.classList.add('hidden');
-                                    }}
-                                    onError={(e) => {
-                                        const target = e.target as HTMLImageElement;
-                                        target.classList.add('hidden');
-                                        const fallback = target.parentElement?.querySelector('.fallback-placeholder') as HTMLElement;
-                                        if (fallback) fallback.classList.remove('hidden');
-                                    }}
+                                    alt={locale === 'mr' ? product.nameMr : product.name}
+                                    fill
+                                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                                    className="object-cover"
+                                    loading="lazy"
                                 />
-
-                                {/* Fallback placeholder gradient */}
-                                <div className="fallback-placeholder absolute inset-0 bg-gradient-to-br from-amber-200 to-orange-300 dark:from-amber-600 dark:to-orange-700">
-                                    {tProduct('featured')}
-                                </div>
                             </div>
 
                             {/* Product Info */}

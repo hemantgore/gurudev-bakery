@@ -4,6 +4,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import { motion } from 'framer-motion';
 import { Link } from '@/i18n/routing';
 import { ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 import type { Product } from '@/lib/products';
 import { formatPrice } from '@/lib/utils';
 
@@ -28,35 +29,14 @@ export default function ProductCard({ product }: ProductCardProps) {
                 {/* Product Image */}
                 <div className="relative aspect-square bg-zinc-200 dark:bg-zinc-700 overflow-hidden">
                     {/* Actual product image */}
-                    <img
+                    <Image
                         src={product.image}
                         alt={productName}
-                        className="absolute inset-0 w-full h-full object-cover"
-                        onLoad={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            const fallback = target.parentElement?.querySelector('.fallback-placeholder') as HTMLElement;
-                            if (fallback) fallback.classList.add('hidden');
-                        }}
-                        onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.classList.add('hidden');
-                            const fallback = target.parentElement?.querySelector('.fallback-placeholder') as HTMLElement;
-                            if (fallback) fallback.classList.remove('hidden');
-                        }}
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        className="object-cover"
+                        loading="lazy"
                     />
-
-                    {/* Fallback placeholder gradient */}
-                    <div className="fallback-placeholder absolute inset-0 bg-gradient-to-br from-amber-200 to-orange-300 dark:from-amber-600 dark:to-orange-700">
-                        <div className="absolute inset-0 flex items-center justify-center">
-                            <span className="text-6xl">
-                                {product.category === 'cakes' && '🎂'}
-                                {product.category === 'breads' && '🍞'}
-                                {product.category === 'biscuits' && '🍪'}
-                                {product.category === 'khari' && '🥟'}
-                                {product.category === 'sweets' && '🧁'}
-                            </span>
-                        </div>
-                    </div>
 
                     {/* Featured badge */}
                     {product.featured && (
