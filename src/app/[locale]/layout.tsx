@@ -72,6 +72,10 @@ export default async function LocaleLayout({
 
     return (
         <html lang={locale}>
+            <head>
+                <link rel="preconnect" href="https://fonts.googleapis.com" />
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+            </head>
             <body
                 className={`${geistSans.variable} ${geistMono.variable} ${notoSansDevanagari.variable} antialiased`}
             >

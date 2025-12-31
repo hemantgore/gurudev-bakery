@@ -1,38 +1,32 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Link } from '@/i18n/routing';
 import { ArrowRight } from 'lucide-react';
-import { useRef } from 'react';
+import Image from 'next/image';
 
 export default function Hero() {
     const t = useTranslations('home');
-    const ref = useRef<HTMLDivElement>(null);
-    const { scrollYProgress } = useScroll({
-        target: ref,
-        offset: ["start start", "end start"]
-    });
-
-    const y = useTransform(scrollYProgress, [0, 1], ['0%', '50%']);
-    const opacity = useTransform(scrollYProgress, [0, 1], [1, 0.3]);
 
     return (
         <section
-            ref={ref}
             className="relative min-h-screen flex items-center justify-center overflow-hidden"
         >
-            {/* Background Image with Parallax */}
-            <motion.div
-                style={{ y, opacity }}
-                className="absolute inset-0 z-0"
-            >
-                <div
-                    className="absolute inset-0 bg-cover bg-center bg-no-repeat bg-[url('/images/hero-bakery-bg.jpg')]"
+            {/* Background Image */}
+            <div className="absolute inset-0 z-0">
+                <Image
+                    src="/images/hero-bakery-bg.jpg"
+                    alt="Gurudev Bakery"
+                    fill
+                    priority
+                    quality={85}
+                    sizes="100vw"
+                    className="object-cover"
                 />
                 {/* Dark overlay for better text readability */}
                 <div className="absolute inset-0 bg-black/40" />
-            </motion.div>
+            </div>
 
             {/* Content */}
             <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

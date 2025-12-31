@@ -1,7 +1,6 @@
 'use client';
 
 import { useTranslations, useLocale } from 'next-intl';
-import { motion } from 'framer-motion';
 import { Link } from '@/i18n/routing';
 import { ArrowRight } from 'lucide-react';
 import Image from 'next/image';
@@ -22,9 +21,8 @@ export default function ProductCard({ product }: ProductCardProps) {
 
     return (
         <Link href={`/menu/${product.id}`}>
-            <motion.div
-                whileHover={{ y: -8 }}
-                className="group bg-white dark:bg-zinc-800 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer"
+            <div
+                className="group bg-white dark:bg-zinc-800 rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer"
             >
                 {/* Product Image */}
                 <div className="relative aspect-square bg-zinc-200 dark:bg-zinc-700 overflow-hidden">
@@ -64,7 +62,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                         <ArrowRight className="w-4 h-4" />
                     </div>
                 </div>
-            </motion.div>
+            </div>
         </Link>
     );
 }
