@@ -92,8 +92,7 @@ export default function FeaturedProducts() {
                         <Link key={product.id} href={`/menu/${product.id}`}>
                             <motion.div
                                 variants={itemVariants}
-                                whileHover={{ y: -8 }}
-                                className="group bg-zinc-50 dark:bg-zinc-800 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer"
+                                className="group bg-zinc-50 dark:bg-zinc-800 rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer"
                             >
                                 {/* Product Image */}
                                 <div className="relative aspect-square bg-zinc-200 dark:bg-zinc-700 overflow-hidden">
