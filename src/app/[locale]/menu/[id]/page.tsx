@@ -145,18 +145,6 @@ export default function ProductDetailPage() {
                                     : product.description}
                             </p>
 
-                            {/* Price */}
-                            <div className="mb-8">
-                                <div className="flex items-baseline gap-2">
-                                    <span className="text-sm text-zinc-500 dark:text-zinc-400">
-                                        {t('price')}:
-                                    </span>
-                                    <span className="text-3xl font-bold text-amber-600 dark:text-amber-400">
-                                        ₹{formatPrice(product.price, locale)}
-                                    </span>
-                                </div>
-                            </div>
-
                             {/* Product Details */}
                             <div className="space-y-4 mb-8 p-6 bg-zinc-50 dark:bg-zinc-800/50 rounded-xl">
                                 <h3 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-3">

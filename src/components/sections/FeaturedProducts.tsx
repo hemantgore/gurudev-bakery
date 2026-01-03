@@ -108,14 +108,9 @@ export default function FeaturedProducts() {
 
                                 {/* Product Info */}
                                 <div className="p-4 sm:p-5">
-                                    <h3 className="text-lg sm:text-xl font-semibold text-zinc-900 dark:text-zinc-50 mb-2 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                                    <h3 className="text-lg sm:text-xl font-semibold text-zinc-900 dark:text-zinc-50 mb-4 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
                                         {locale === 'mr' ? product.nameMr : product.name}
                                     </h3>
-                                    <div className="flex items-center justify-between mb-4">
-                                        <span className="text-xl sm:text-2xl font-bold text-amber-600 dark:text-amber-400">
-                                            {tCommon('currency')}{formatPrice(product.price, locale)}
-                                        </span>
-                                    </div>
                                     <div className="inline-flex items-center gap-2 text-amber-600 dark:text-amber-400 font-medium group-hover:gap-3 transition-all duration-300">
                                         {tProduct('view_details')}
                                         <ArrowRight className="w-4 h-4" />
