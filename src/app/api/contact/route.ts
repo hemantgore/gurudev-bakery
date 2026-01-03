@@ -4,25 +4,25 @@ import { Resend } from 'resend';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: NextRequest) {
-    try {
-        const body = await request.json();
-        const { name, email, phone, message } = body;
+  try {
+    const body = await request.json();
+    const { name, email, phone, message } = body;
 
-        // Validate required fields
-        if (!name || !email || !phone || !message) {
-            return NextResponse.json(
-                { error: 'Missing required fields' },
-                { status: 400 }
-            );
-        }
+    // Validate required fields
+    if (!name || !email || !phone || !message) {
+      return NextResponse.json(
+        { error: 'Missing required fields' },
+        { status: 400 }
+      );
+    }
 
-        // Send email using Resend
-        const data = await resend.emails.send({
-            from: 'Gurudev Bakery <noreply@gurudevbakery.com>',
-            to: [process.env.CONTACT_EMAIL],
-            replyTo: email, // Customer's email
-            subject: `New Contact Form Submission from ${name}`,
-            html: `
+    // Send email using Resend
+    const data = await resend.emails.send({
+      from: 'Gurudev Bakery <noreply@gurudevbakery.com>',
+      to: [process.env.CONTACT_EMAIL],
+      replyTo: email, // Customer's email
+      subject: `New Contact Form Submission from ${name}`,
+      html: `
         <!DOCTYPE html>
         <html>
           <head>
@@ -112,17 +112,17 @@ export async function POST(request: NextRequest) {
           </body>
         </html>
       `,
-        });
+    });
 
-        return NextResponse.json(
-            { success: true, data },
-            { status: 200 }
-        );
-    } catch (error) {
-        console.error('Error sending email:', error);
-        return NextResponse.json(
-            { error: 'Failed to send email', details: error instanceof Error ? error.message : 'Unknown error' },
-            { status: 500 }
-        );
-    }
+    return NextResponse.json(
+      { success: true, data },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error('Error sending email:', error);
+    return NextResponse.json(
+      { error: 'Failed to send email', details: error instanceof Error ? error.message : 'Unknown error' },
+      { status: 500 }
+    );
+  }
 }
