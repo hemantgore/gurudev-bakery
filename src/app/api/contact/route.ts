@@ -18,8 +18,8 @@ export async function POST(request: NextRequest) {
 
         // Send email using Resend
         const data = await resend.emails.send({
-            from: 'Gurudev Bakery <onboarding@resend.dev>', // You'll need to verify your domain
-            to: [process.env.CONTACT_EMAIL || 'your-email@example.com'], // Your Gmail
+            from: 'Gurudev Bakery <noreply@gurudevbakery.com>',
+            to: [process.env.CONTACT_EMAIL],
             replyTo: email, // Customer's email
             subject: `New Contact Form Submission from ${name}`,
             html: `
