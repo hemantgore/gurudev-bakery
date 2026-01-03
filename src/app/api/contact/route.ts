@@ -16,6 +16,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Validate environment variable
+    if (!process.env.CONTACT_EMAIL) {
+      return NextResponse.json(
+        { error: 'Server configuration error' },
+        { status: 500 }
+      );
+    }
+
     // Send email using Resend
     const data = await resend.emails.send({
       from: 'Gurudev Bakery <noreply@gurudevbakery.com>',
