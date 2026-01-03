@@ -85,18 +85,38 @@ export default function ContactPage() {
             clearErrors('captcha');
             setCaptchaError('');
 
-            // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            console.log('Contact form submitted:', { ...data, captchaAnswered: true });
+            // Send email via API
+            const response = await fetch('/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: data.name,
+                    email: data.email,
+                    phone: data.phone,
+                    message: data.message,
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to send message');
+            }
+
+            const result = await response.json();
+            console.log('Email sent successfully:', result);
 
             setIsSubmitted(true);
             reset();
             setCaptcha(generateCaptcha()); // Generate new captcha
 
-            // Hide success message after 3 seconds
-            setTimeout(() => setIsSubmitted(false), 3000);
+            // Hide success message after 5 seconds
+            setTimeout(() => setIsSubmitted(false), 5000);
         } catch (error) {
             console.error('Error submitting form:', error);
+            setError('email', {
+                message: 'Failed to send message. Please try again or contact us directly.'
+            });
         }
     };
 
