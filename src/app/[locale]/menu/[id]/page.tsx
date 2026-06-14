@@ -4,13 +4,18 @@ import { useParams } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 import { products } from '@/lib/products';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ShoppingCart, Tag } from 'lucide-react';
+import { ArrowLeft, ShoppingCart } from 'lucide-react';
 import { Link } from '@/i18n/routing';
-import Image from 'next/image';
 import ProductCard from '@/components/common/ProductCard';
 import { formatPrice } from '@/lib/utils';
 import { getProductSchema, getBreadcrumbSchema } from '@/lib/structured-data';
 import { useEffect } from 'react';
+import ParallaxImage from '@/components/motion/ParallaxImage';
+import TiltCard from '@/components/motion/TiltCard';
+import RevealOnScroll from '@/components/motion/RevealOnScroll';
+import SplitText from '@/components/motion/SplitText';
+import MagneticButton from '@/components/motion/MagneticButton';
+import Footer from '@/components/layout/Footer';
 
 export default function ProductDetailPage() {
     const params = useParams();
@@ -24,192 +29,149 @@ export default function ProductDetailPage() {
     const productName = locale === 'mr' ? product?.nameMr : product?.name;
     const productDescription = locale === 'mr' ? product?.descriptionMr : product?.description;
 
+    useEffect(() => {
+        if (!product) return;
+        const productSchema = getProductSchema({
+            name: productName || '',
+            description: productDescription || '',
+            price: product.price,
+            image: product.image,
+        });
+        const breadcrumbSchema = getBreadcrumbSchema([
+            { name: 'Home', url: '/' },
+            { name: 'Menu', url: '/menu' },
+            { name: productName || '', url: `/menu/${product.id}` },
+        ]);
+        const s1 = document.createElement('script');
+        s1.type = 'application/ld+json';
+        s1.text = JSON.stringify(productSchema);
+        document.head.appendChild(s1);
+        const s2 = document.createElement('script');
+        s2.type = 'application/ld+json';
+        s2.text = JSON.stringify(breadcrumbSchema);
+        document.head.appendChild(s2);
+        return () => {
+            document.head.removeChild(s1);
+            document.head.removeChild(s2);
+        };
+    }, [product, productName, productDescription]);
+
     if (!product) {
         return (
-            <div className="min-h-screen flex items-center justify-center">
+            <div className="min-h-screen flex items-center justify-center bg-zinc-950 text-white">
                 <div className="text-center">
-                    <h1 className="text-3xl font-bold mb-4">
-                        {t('not_found')}
-                    </h1>
-                    <Link
-                        href="/menu"
-                        className="text-amber-600 hover:text-amber-700 transition-colors"
-                    >
-                        {t('back_to_menu')}
+                    <h1 className="font-display text-5xl mb-6">{t('not_found')}</h1>
+                    <Link href="/menu" className="text-amber-400 hover:text-amber-300 transition-colors uppercase tracking-widest text-sm">
+                        ← {t('back_to_menu')}
                     </Link>
                 </div>
             </div>
         );
     }
 
-    // Get related products from the same category
-    const relatedProducts = products
-        .filter((p) => p.category === product.category && p.id !== product.id)
-        .slice(0, 4);
-
-    // Add structured data to page
-    useEffect(() => {
-        if (product) {
-            const productSchema = getProductSchema({
-                name: productName || '',
-                description: productDescription || '',
-                price: product.price,
-                image: product.image,
-            });
-
-            const breadcrumbSchema = getBreadcrumbSchema([
-                { name: 'Home', url: '/' },
-                { name: 'Menu', url: '/menu' },
-                { name: productName || '', url: `/menu/${product.id}` },
-            ]);
-
-            // Add schemas to head
-            const script1 = document.createElement('script');
-            script1.type = 'application/ld+json';
-            script1.text = JSON.stringify(productSchema);
-            document.head.appendChild(script1);
-
-            const script2 = document.createElement('script');
-            script2.type = 'application/ld+json';
-            script2.text = JSON.stringify(breadcrumbSchema);
-            document.head.appendChild(script2);
-
-            return () => {
-                document.head.removeChild(script1);
-                document.head.removeChild(script2);
-            };
-        }
-    }, [product, productName, productDescription]);
+    const relatedProducts = products.filter((p) => p.category === product.category && p.id !== product.id).slice(0, 4);
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-zinc-50 to-white dark:from-zinc-950 dark:to-zinc-900">
-            <div className="container mx-auto px-4 py-8 max-w-7xl">
-                {/* Back Button */}
-                <Link
-                    href="/menu"
-                    className="inline-flex items-center gap-2 text-zinc-600 dark:text-zinc-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors mb-8"
-                >
-                    <ArrowLeft className="w-5 h-5" />
-                    {t('back_to_menu')}
-                </Link>
+        <>
+            <article className="bg-stone-50 dark:bg-zinc-950">
+                {/* Top: bold hero with image + info */}
+                <section className="relative pt-32 pb-24 sm:pb-32 overflow-hidden">
+                    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                        <Link href="/menu" className="inline-flex items-center gap-2 text-sm uppercase tracking-[0.25em] text-zinc-600 dark:text-zinc-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors mb-12">
+                            <ArrowLeft className="w-4 h-4" />
+                            {t('back_to_menu')}
+                        </Link>
 
-                {/* Product Detail Section */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6 }}
-                    className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16"
-                >
-                    {/* Product Image */}
-                    <div className="relative aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-900/20 dark:to-orange-900/20">
-                        <Image
-                            src={product.image}
-                            alt={productName || ''}
-                            fill
-                            sizes="(max-width: 1024px) 100vw, 50vw"
-                            className="object-cover"
-                            priority
-                        />
-
-                        {product.featured && (
-                            <div className="absolute top-4 right-4 bg-amber-500 text-white px-4 py-2 rounded-full text-sm font-semibold">
-                                {t('featured')}
-                            </div>
-                        )}
-                    </div>
-
-                    {/* Product Info */}
-                    <div className="flex flex-col justify-center">
-                        <motion.div
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.6, delay: 0.2 }}
-                        >
-                            {/* Category Badge */}
-                            <div className="flex items-center gap-2 mb-4">
-                                <Tag className="w-4 h-4 text-amber-600" />
-                                <span className="text-sm font-medium text-amber-600 dark:text-amber-400 uppercase tracking-wide">
-                                    {tMenu(`categories.${product.category}`)}
-                                </span>
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                            {/* Image - left, asymmetric */}
+                            <div className="lg:col-span-7">
+                                <TiltCard className="rounded-[2rem] overflow-hidden" intensity={4}>
+                                    <ParallaxImage
+                                        src={product.image}
+                                        alt={productName || ''}
+                                        className="aspect-[5/6] w-full"
+                                        intensity={50}
+                                        priority
+                                        sizes="(max-width: 1024px) 100vw, 60vw"
+                                    />
+                                </TiltCard>
                             </div>
 
-                            {/* Product Name */}
-                            <h1 className="text-4xl lg:text-5xl font-bold text-zinc-900 dark:text-zinc-50 mb-4">
-                                {locale === 'mr' ? product.nameMr : product.name}
-                            </h1>
+                            {/* Info - right, sticky */}
+                            <div className="lg:col-span-5">
+                                <div className="lg:sticky lg:top-32">
+                                    <div className="text-xs uppercase tracking-[0.35em] text-amber-700 dark:text-amber-400 mb-4">
+                                        {tMenu(`categories.${product.category}`)}
+                                    </div>
+                                    <SplitText
+                                        as="h1"
+                                        text={productName || ''}
+                                        className="font-display text-5xl sm:text-6xl md:text-7xl font-medium leading-[0.95] tracking-tight text-zinc-950 dark:text-zinc-50 text-balance mb-6"
+                                    />
 
-                            {/* Product Description */}
-                            <p className="text-lg text-zinc-600 dark:text-zinc-400 mb-8 leading-relaxed">
-                                {locale === 'mr'
-                                    ? product.descriptionMr
-                                    : product.description}
-                            </p>
+                                    <p className="text-lg text-zinc-700 dark:text-zinc-300 leading-relaxed mb-10">
+                                        {productDescription}
+                                    </p>
 
-                            {/* Product Details */}
-                            <div className="space-y-4 mb-8 p-6 bg-zinc-50 dark:bg-zinc-800/50 rounded-xl">
-                                <h3 className="font-semibold text-zinc-900 dark:text-zinc-50 mb-3">
-                                    {t('product_details')}
-                                </h3>
-                                <div className="space-y-2 text-sm text-zinc-600 dark:text-zinc-400">
-                                    <div className="flex justify-between">
-                                        <span>{t('category')}:</span>
-                                        <span className="font-medium">
-                                            {tMenu(`categories.${product.category}`)}
+                                    <div className="flex items-baseline gap-6 mb-10 pb-10 border-b border-zinc-200 dark:border-zinc-800">
+                                        <span className="font-display font-medium text-7xl text-zinc-950 dark:text-amber-400 leading-none">
+                                            {formatPrice(product.price, locale)}
                                         </span>
+                                        <span className="text-sm uppercase tracking-[0.25em] text-zinc-500 dark:text-zinc-400">{t('fresh_baked')} · {t('daily')}</span>
                                     </div>
-                                    <div className="flex justify-between">
-                                        <span>{t('availability')}:</span>
-                                        <span className="font-medium text-green-600 dark:text-green-400">
-                                            {t('in_stock')}
-                                        </span>
+
+                                    <div className="space-y-4 mb-10 text-sm">
+                                        <div className="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 pb-3">
+                                            <span className="uppercase tracking-[0.25em] text-zinc-500 dark:text-zinc-400">{t('availability')}</span>
+                                            <span className="font-medium text-emerald-700 dark:text-emerald-400">● {t('in_stock')}</span>
+                                        </div>
+                                        <div className="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 pb-3">
+                                            <span className="uppercase tracking-[0.25em] text-zinc-500 dark:text-zinc-400">{t('category')}</span>
+                                            <span className="font-medium text-zinc-900 dark:text-zinc-100">{tMenu(`categories.${product.category}`)}</span>
+                                        </div>
                                     </div>
-                                    <div className="flex justify-between">
-                                        <span>{t('fresh_baked')}:</span>
-                                        <span className="font-medium">
-                                            {t('daily')}
-                                        </span>
-                                    </div>
+
+                                    <MagneticButton as="a" href="tel:+918380060631" className="inline-flex items-center justify-center gap-3 w-full px-8 py-5 bg-zinc-950 hover:bg-zinc-800 dark:bg-amber-500 dark:hover:bg-amber-400 text-white dark:text-zinc-950 font-semibold rounded-full text-lg transition-colors">
+                                        <ShoppingCart className="w-5 h-5" />
+                                        {t('order_now')}
+                                    </MagneticButton>
+                                    <p className="mt-4 text-xs text-center uppercase tracking-[0.25em] text-zinc-500 dark:text-zinc-400">{t('contact_for_order')}</p>
                                 </div>
                             </div>
-
-                            {/* CTA Button */}
-                            <a
-                                href="tel:+918380060631"
-                                className="w-full bg-amber-600 hover:bg-amber-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 flex items-center justify-center gap-3 shadow-lg hover:shadow-xl"
-                            >
-                                <ShoppingCart className="w-5 h-5" />
-                                {t('order_now')}
-                            </a>
-
-                            {/* Additional Info */}
-                            <p className="mt-4 text-sm text-zinc-500 dark:text-zinc-400 text-center">
-                                {t('contact_for_order')}
-                            </p>
-                        </motion.div>
-                    </div>
-                </motion.div>
-
-                {/* Related Products Section */}
-                {relatedProducts.length > 0 && (
-                    <motion.div
-                        initial={{ opacity: 0, y: 40 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.6, delay: 0.4 }}
-                    >
-                        <h2 className="text-3xl font-bold text-zinc-900 dark:text-zinc-50 mb-8">
-                            {t('related_products')}
-                        </h2>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                            {relatedProducts.map((relatedProduct) => (
-                                <ProductCard
-                                    key={relatedProduct.id}
-                                    product={relatedProduct}
-                                />
-                            ))}
                         </div>
-                    </motion.div>
+                    </div>
+                </section>
+
+                {/* Related */}
+                {relatedProducts.length > 0 && (
+                    <section className="bg-zinc-950 text-zinc-100 py-24 sm:py-32">
+                        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                            <RevealOnScroll className="mb-12">
+                                <div className="text-xs uppercase tracking-[0.35em] text-amber-400 mb-4">— More from {tMenu(`categories.${product.category}`)}</div>
+                                <SplitText
+                                    as="h2"
+                                    text={t('related_products')}
+                                    className="font-display text-4xl sm:text-5xl md:text-6xl font-medium leading-tight"
+                                />
+                            </RevealOnScroll>
+                            <motion.div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                                {relatedProducts.map((rp, i) => (
+                                    <motion.div
+                                        key={rp.id}
+                                        initial={{ opacity: 0, y: 30 }}
+                                        whileInView={{ opacity: 1, y: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ duration: 0.5, delay: i * 0.08 }}
+                                    >
+                                        <ProductCard product={rp} />
+                                    </motion.div>
+                                ))}
+                            </motion.div>
+                        </div>
+                    </section>
                 )}
-            </div>
-        </div>
+            </article>
+            <Footer />
+        </>
     );
 }
