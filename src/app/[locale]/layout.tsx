@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Noto_Sans_Devanagari } from "next/font/google";
+import { Geist, Geist_Mono, Noto_Sans_Devanagari, Fraunces } from "next/font/google";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import Header from '@/components/layout/Header';
+import SmoothScrollProvider from '@/components/providers/SmoothScrollProvider';
 import { getLocalBusinessSchema } from '@/lib/structured-data';
 import "../globals.css";
 
@@ -26,6 +27,15 @@ const notoSansDevanagari = Noto_Sans_Devanagari({
     variable: "--font-noto-sans-devanagari",
     subsets: ["devanagari", "latin"],
     weight: ["400", "500", "600", "700"],
+    display: 'swap',
+    preload: true,
+});
+
+const fraunces = Fraunces({
+    variable: "--font-fraunces",
+    subsets: ["latin"],
+    weight: ["400", "500", "600", "700", "900"],
+    style: ["normal", "italic"],
     display: 'swap',
     preload: true,
 });
@@ -140,11 +150,13 @@ export default async function LocaleLayout({
                 />
             </head>
             <body
-                className={`${geistSans.variable} ${geistMono.variable} ${notoSansDevanagari.variable} antialiased`}
+                className={`${geistSans.variable} ${geistMono.variable} ${notoSansDevanagari.variable} ${fraunces.variable} antialiased bg-background text-foreground`}
             >
                 <NextIntlClientProvider messages={messages}>
-                    <Header />
-                    {children}
+                    <SmoothScrollProvider>
+                        <Header />
+                        {children}
+                    </SmoothScrollProvider>
                 </NextIntlClientProvider>
             </body>
         </html>

@@ -1,142 +1,89 @@
 'use client';
 
 import { useTranslations, useLocale } from 'next-intl';
-import { motion } from 'framer-motion';
 import { Link } from '@/i18n/routing';
 import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 import { formatPrice } from '@/lib/utils';
+import RevealOnScroll from '@/components/motion/RevealOnScroll';
+import SplitText from '@/components/motion/SplitText';
+import TiltCard from '@/components/motion/TiltCard';
+import { BentoGrid, BentoCell } from '@/components/motion/BentoGrid';
 
-// Mock featured products data - will be replaced with CMS data later
-const mockProducts = [
-    {
-        id: 20,
-        name: 'Chocolate Cake',
-        nameMr: 'चॉकलेट केक',
-        price: 350,
-        image: '/images/chocolate-cake.jpg',
-    },
-    {
-        id: 8,
-        name: 'Milk Bread',
-        nameMr: 'मिल्क ब्रेड',
-        price: 40,
-        image: '/images/milk-bread.jpg',
-    },
-    {
-        id: 1,
-        name: 'Nargees Khari',
-        nameMr: 'नर्गिस खारी',
-        price: 25,
-        image: '/images/nargees-khari.jpg',
-    },
+const featured = [
+    { id: 20, name: 'Chocolate Cake', nameMr: 'चॉकलेट केक', price: 350, image: '/images/chocolate-cake.jpg', span: 'lg' as const, tagline: 'Signature' },
+    { id: 22, name: 'Black Forest', nameMr: 'ब्लॅक फॉरेस्ट केक', price: 400, image: '/images/black-forest.jpg', span: 'md' as const, tagline: 'Best Seller' },
+    { id: 8, name: 'Milk Bread', nameMr: 'मिल्क ब्रेड', price: 40, image: '/images/milk-bread.jpg', span: 'sm' as const, tagline: 'Daily Fresh' },
+    { id: 1, name: 'Nargees Khari', nameMr: 'नर्गिस खारी', price: 25, image: '/images/nargees-khari.jpg', span: 'sm' as const, tagline: 'House Special' },
+    { id: 13, name: 'Cream Roll', nameMr: 'क्रीम रोल', price: 45, image: '/images/cream-roll.jpg', span: 'md' as const, tagline: 'Crowd Favorite' },
 ];
 
 export default function FeaturedProducts() {
     const t = useTranslations('home');
     const tProduct = useTranslations('product');
-    const tCommon = useTranslations('common'); const locale = useLocale();
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.1,
-            },
-        },
-    };
-
-    const itemVariants = {
-        hidden: { opacity: 0, y: 20 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: { duration: 0.5 },
-        },
-    };
+    const locale = useLocale();
 
     return (
-        <section className="py-16 sm:py-20 lg:py-24 bg-white dark:bg-zinc-900">
+        <section className="relative py-24 sm:py-32 bg-stone-50 dark:bg-zinc-950">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                {/* Section Header */}
-                <div className="text-center mb-12">
-                    <motion.h2
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6 }}
-                        className="text-3xl sm:text-4xl lg:text-5xl font-bold text-zinc-900 dark:text-zinc-50 mb-4"
-                    >
-                        {t('featured_title')}
-                    </motion.h2>
-                    <motion.p
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.6, delay: 0.2 }}
-                        className="text-lg text-zinc-600 dark:text-zinc-400"
-                    >
-                        {t('featured_subtitle')}
-                    </motion.p>
-                </div>
-
-                {/* Products Grid */}
-                <motion.div
-                    variants={containerVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true }}
-                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8"
-                >
-                    {mockProducts.map((product) => (
-                        <Link key={product.id} href={`/menu/${product.id}`}>
-                            <motion.div
-                                variants={itemVariants}
-                                className="group bg-zinc-50 dark:bg-zinc-800 rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer"
-                            >
-                                {/* Product Image */}
-                                <div className="relative aspect-square bg-zinc-200 dark:bg-zinc-700 overflow-hidden">
-                                    <Image
-                                        src={product.image}
-                                        alt={locale === 'mr' ? product.nameMr : product.name}
-                                        fill
-                                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                                        className="object-cover"
-                                        loading="lazy"
-                                    />
-                                </div>
-
-                                {/* Product Info */}
-                                <div className="p-4 sm:p-5">
-                                    <h3 className="text-lg sm:text-xl font-semibold text-zinc-900 dark:text-zinc-50 mb-4 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
-                                        {locale === 'mr' ? product.nameMr : product.name}
-                                    </h3>
-                                    <div className="inline-flex items-center gap-2 text-amber-600 dark:text-amber-400 font-medium group-hover:gap-3 transition-all duration-300">
-                                        {tProduct('view_details')}
-                                        <ArrowRight className="w-4 h-4" />
-                                    </div>
-                                </div>
-                            </motion.div>
+                <RevealOnScroll>
+                    <div className="flex items-end justify-between flex-wrap gap-6 mb-14">
+                        <div className="max-w-2xl">
+                            <div className="text-xs uppercase tracking-[0.35em] text-amber-700 dark:text-amber-400 mb-4">
+                                — {t('featured_subtitle')}
+                            </div>
+                            <SplitText
+                                as="h2"
+                                text={t('featured_title')}
+                                className="font-display text-5xl sm:text-6xl md:text-7xl font-medium leading-[0.95] tracking-tight text-zinc-950 dark:text-zinc-50 text-balance"
+                            />
+                        </div>
+                        <Link
+                            href="/menu"
+                            className="group inline-flex items-center gap-3 text-sm uppercase tracking-[0.25em] text-zinc-950 dark:text-zinc-50"
+                        >
+                            {tProduct('view_all')}
+                            <span className="w-10 h-px bg-current transition-all duration-300 group-hover:w-16" />
+                            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                         </Link>
-                    ))}
-                </motion.div>
+                    </div>
+                </RevealOnScroll>
 
-                {/* View All Products Button */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 0.4 }}
-                    className="text-center mt-12"
-                >
-                    <Link
-                        href="/menu"
-                        className="inline-flex items-center gap-2 px-8 py-3 bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 font-semibold rounded-full transition-all duration-300 transform hover:scale-105"
-                    >
-                        {tProduct('view_all')}
-                        <ArrowRight className="w-5 h-5" />
-                    </Link>
-                </motion.div>
+                <BentoGrid>
+                    {featured.map((p, i) => (
+                        <BentoCell key={p.id} span={p.span}>
+                            <RevealOnScroll delay={i * 0.08}>
+                                <Link href={`/menu/${p.id}`} className="block h-full">
+                                    <TiltCard className="group relative h-full min-h-[260px] overflow-hidden rounded-3xl bg-zinc-900" intensity={5}>
+                                        <Image
+                                            src={p.image}
+                                            alt={locale === 'mr' ? p.nameMr : p.name}
+                                            fill
+                                            sizes="(max-width: 768px) 100vw, 50vw"
+                                            className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/85 via-zinc-950/20 to-transparent" />
+                                        <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-xs uppercase tracking-[0.25em] text-white">
+                                            {p.tagline}
+                                        </div>
+                                        <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-amber-400 text-zinc-950 font-display font-semibold text-sm">
+                                            {formatPrice(p.price, locale)}
+                                        </div>
+                                        <div className="absolute inset-x-0 bottom-0 p-6">
+                                            <h3 className="font-display text-2xl sm:text-3xl text-white leading-tight mb-2 transition-all duration-300 group-hover:italic">
+                                                {locale === 'mr' ? p.nameMr : p.name}
+                                            </h3>
+                                            <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-amber-300 transition-all duration-300 group-hover:gap-3">
+                                                {tProduct('view_details')}
+                                                <ArrowRight className="w-4 h-4" />
+                                            </div>
+                                        </div>
+                                    </TiltCard>
+                                </Link>
+                            </RevealOnScroll>
+                        </BentoCell>
+                    ))}
+                </BentoGrid>
             </div>
         </section>
     );

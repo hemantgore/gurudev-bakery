@@ -1,113 +1,74 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { motion } from 'framer-motion';
 import { Link } from '@/i18n/routing';
-import { Heart, Award, Clock } from 'lucide-react';
+import { Heart, Award, Clock, ArrowRight } from 'lucide-react';
+import ParallaxImage from '@/components/motion/ParallaxImage';
+import RevealOnScroll from '@/components/motion/RevealOnScroll';
+import SplitText from '@/components/motion/SplitText';
 
 export default function AboutSnippet() {
     const t = useTranslations('home');
 
     const features = [
-        {
-            icon: Clock,
-            title: t('fresh_daily'),
-            description: t('fresh_daily_desc'),
-        },
-        {
-            icon: Award,
-            title: t('quality_ingredients'),
-            description: t('quality_ingredients_desc'),
-        },
-        {
-            icon: Heart,
-            title: t('traditional_recipes'),
-            description: t('traditional_recipes_desc'),
-        },
+        { icon: Clock, title: t('fresh_daily'), description: t('fresh_daily_desc'), num: '01' },
+        { icon: Award, title: t('quality_ingredients'), description: t('quality_ingredients_desc'), num: '02' },
+        { icon: Heart, title: t('traditional_recipes'), description: t('traditional_recipes_desc'), num: '03' },
     ];
 
     return (
-        <section className="py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-amber-50 to-white dark:from-zinc-800 dark:to-zinc-900">
-            <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="max-w-6xl mx-auto">
-                    {/* About Content */}
-                    <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-16">
-                        {/* Left: Image/Decoration */}
-                        <motion.div
-                            initial={{ opacity: 0, x: -50 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6 }}
-                            className="relative"
-                        >
-                            <div className="aspect-square rounded-3xl shadow-2xl overflow-hidden">
-                                <img
-                                    src="/images/about-bakery.jpg"
-                                    alt={t('about_title')}
-                                    className="w-full h-full object-cover"
-                                />
-                            </div>
-                            {/* Decorative element */}
-                            <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-amber-300 dark:bg-amber-500 rounded-full opacity-20 blur-2xl" />
-                        </motion.div>
+        <section className="relative bg-zinc-950 text-zinc-100 overflow-hidden">
+            {/* Editorial quote band */}
+            <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
+                <div className="grid lg:grid-cols-12 gap-12 items-center">
+                    <RevealOnScroll className="lg:col-span-6">
+                        <ParallaxImage
+                            src="/images/about-bakery.jpg"
+                            alt={t('about_title')}
+                            className="aspect-[4/5] rounded-[2rem] w-full"
+                            intensity={60}
+                            sizes="(max-width: 1024px) 100vw, 50vw"
+                        />
+                    </RevealOnScroll>
 
-                        {/* Right: Text Content */}
-                        <motion.div
-                            initial={{ opacity: 0, x: 50 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6 }}
-                        >
-                            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-zinc-900 dark:text-zinc-50 mb-6">
-                                {t('about_title')}
-                            </h2>
-                            <p className="text-lg text-zinc-600 dark:text-zinc-400 mb-8 leading-relaxed">
+                    <div className="lg:col-span-6">
+                        <div className="text-xs uppercase tracking-[0.35em] text-amber-400 mb-6">
+                            — {t('about_title')}
+                        </div>
+                        <SplitText
+                            as="h2"
+                            text="Two decades. One oven. Endless love."
+                            className="font-display text-5xl sm:text-6xl md:text-7xl font-medium leading-[0.95] tracking-tight text-balance mb-8"
+                        />
+                        <RevealOnScroll delay={0.2}>
+                            <p className="text-lg text-zinc-300 leading-relaxed mb-10 max-w-xl">
                                 {t('about_description')}
                             </p>
                             <Link
                                 href="/about"
-                                className="inline-flex items-center gap-2 px-6 py-3 bg-amber-600 hover:bg-amber-700 dark:bg-amber-500 dark:hover:bg-amber-600 text-white font-semibold rounded-full transition-all duration-300"
+                                className="group inline-flex items-center gap-3 px-7 py-4 bg-amber-500 hover:bg-amber-400 text-zinc-950 font-semibold rounded-full transition-colors"
                             >
                                 {t('about_cta')}
+                                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                             </Link>
-                        </motion.div>
+                        </RevealOnScroll>
                     </div>
+                </div>
 
-                    {/* Why Choose Us Section */}
-                    <div className="mt-16">
-                        <motion.h3
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.6 }}
-                            className="text-2xl sm:text-3xl font-bold text-center text-zinc-900 dark:text-zinc-50 mb-12"
-                        >
-                            {t('why_choose_title')}
-                        </motion.h3>
-
-                        <div className="grid sm:grid-cols-3 gap-8">
-                            {features.map((feature, index) => (
-                                <motion.div
-                                    key={index}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ duration: 0.6, delay: index * 0.2 }}
-                                    className="text-center"
-                                >
-                                    <div className="inline-flex items-center justify-center w-16 h-16 bg-amber-100 dark:bg-amber-900/30 rounded-full mb-4">
-                                        <feature.icon className="w-8 h-8 text-amber-600 dark:text-amber-400" />
-                                    </div>
-                                    <h4 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50 mb-2">
-                                        {feature.title}
-                                    </h4>
-                                    <p className="text-zinc-600 dark:text-zinc-400">
-                                        {feature.description}
-                                    </p>
-                                </motion.div>
-                            ))}
-                        </div>
-                    </div>
+                {/* Why-choose-us as editorial numbered list */}
+                <div className="mt-24 sm:mt-32 grid sm:grid-cols-3 gap-px bg-zinc-800 border border-zinc-800 rounded-3xl overflow-hidden">
+                    {features.map((f, i) => (
+                        <RevealOnScroll key={i} delay={i * 0.1}>
+                            <div className="bg-zinc-950 p-8 sm:p-10 h-full flex flex-col">
+                                <div className="flex items-center justify-between mb-8">
+                                    <span className="font-display text-5xl text-amber-400/60">{f.num}</span>
+                                    <f.icon className="w-7 h-7 text-amber-400" />
+                                </div>
+                                <h4 className="font-display text-2xl mb-3 leading-tight">{f.title}</h4>
+                                <p className="text-zinc-400 text-sm leading-relaxed">{f.description}</p>
+                            </div>
+                        </RevealOnScroll>
+                    ))}
                 </div>
             </div>
         </section>
