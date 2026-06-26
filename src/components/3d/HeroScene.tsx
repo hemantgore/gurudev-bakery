@@ -1,9 +1,14 @@
 'use client';
 
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, Environment } from '@react-three/drei';
-import { useRef, useMemo, useState, useEffect, Component, type ReactNode } from 'react';
+import { Float, Environment, useGLTF } from '@react-three/drei';
+import { useRef, useMemo, useState, useEffect, useLayoutEffect, Suspense, Component, type ReactNode } from 'react';
 import * as THREE from 'three';
+
+// Drop a realistic cake mesh here (e.g. a Sketchfab/CGTrader .glb) and it takes over
+// the procedural cake automatically. If the file is missing or fails to load, the
+// procedural cake below is rendered instead — the hero never breaks.
+const CAKE_MODEL_URL = '/cake.glb';
 
 const PALETTE = [
     new THREE.Color('#f59e0b'),
@@ -66,7 +71,8 @@ function Sprinkles({ count = 60 }: { count?: number }) {
     );
 }
 
-function Cake() {
+// Auto-rotating, gently floating wrapper shared by both the GLTF and procedural cakes.
+function RotatingFloat({ children }: { children: ReactNode }) {
     const group = useRef<THREE.Group>(null);
 
     useFrame((state) => {
@@ -78,31 +84,108 @@ function Cake() {
     return (
         <group ref={group}>
             <Float speed={1.2} rotationIntensity={0.25} floatIntensity={0.6}>
-                <mesh position={[0, -0.4, 0]} castShadow receiveShadow>
-                    <cylinderGeometry args={[1.1, 1.15, 0.7, 64]} />
-                    <meshStandardMaterial color="#3a1f0d" roughness={0.55} />
-                </mesh>
-                <mesh position={[0, 0.05, 0]} castShadow>
-                    <cylinderGeometry args={[1.13, 1.13, 0.18, 64]} />
-                    <meshStandardMaterial color="#fef3c7" roughness={0.7} />
-                </mesh>
-                <mesh position={[0, 0.45, 0]} castShadow>
-                    <cylinderGeometry args={[0.8, 0.9, 0.45, 64]} />
-                    <meshPhysicalMaterial
-                        color="#f59e0b"
-                        roughness={0.18}
-                        metalness={0.1}
-                        clearcoat={0.8}
-                        clearcoatRoughness={0.2}
-                    />
-                </mesh>
-                <mesh position={[0, 0.78, 0]} castShadow>
-                    <torusGeometry args={[0.32, 0.07, 16, 64]} />
-                    <meshStandardMaterial color="#fbbf24" roughness={0.2} metalness={0.4} />
-                </mesh>
-                <Sprinkles count={50} />
+                {children}
             </Float>
         </group>
+    );
+}
+
+function ProceduralCake() {
+    return (
+        <RotatingFloat>
+            <mesh position={[0, -0.4, 0]} castShadow receiveShadow>
+                <cylinderGeometry args={[1.1, 1.15, 0.7, 64]} />
+                <meshStandardMaterial color="#3a1f0d" roughness={0.55} />
+            </mesh>
+            <mesh position={[0, 0.05, 0]} castShadow>
+                <cylinderGeometry args={[1.13, 1.13, 0.18, 64]} />
+                <meshStandardMaterial color="#fef3c7" roughness={0.7} />
+            </mesh>
+            <mesh position={[0, 0.45, 0]} castShadow>
+                <cylinderGeometry args={[0.8, 0.9, 0.45, 64]} />
+                <meshPhysicalMaterial
+                    color="#f59e0b"
+                    roughness={0.18}
+                    metalness={0.1}
+                    clearcoat={0.8}
+                    clearcoatRoughness={0.2}
+                />
+            </mesh>
+            <mesh position={[0, 0.78, 0]} castShadow>
+                <torusGeometry args={[0.32, 0.07, 16, 64]} />
+                <meshStandardMaterial color="#fbbf24" roughness={0.2} metalness={0.4} />
+            </mesh>
+            <Sprinkles count={50} />
+        </RotatingFloat>
+    );
+}
+
+// Loads the real cake mesh, auto-centers it at the origin and scales it to a fixed
+// target size so any asset (regardless of its native units) frames correctly.
+function GLTFModel({ url }: { url: string }) {
+    const { scene } = useGLTF(url, true);
+    const ref = useRef<THREE.Group>(null);
+
+    const cloned = useMemo(() => {
+        const copy = scene.clone(true);
+        copy.traverse((obj) => {
+            if ((obj as THREE.Mesh).isMesh) {
+                obj.castShadow = true;
+                obj.receiveShadow = true;
+            }
+        });
+        return copy;
+    }, [scene]);
+
+    useLayoutEffect(() => {
+        if (!ref.current) return;
+        const box = new THREE.Box3().setFromObject(ref.current);
+        const size = new THREE.Vector3();
+        const center = new THREE.Vector3();
+        box.getSize(size);
+        box.getCenter(center);
+        const maxDim = Math.max(size.x, size.y, size.z) || 1;
+        const scale = 2.4 / maxDim;
+        ref.current.scale.setScalar(scale);
+        ref.current.position.set(-center.x * scale, -center.y * scale, -center.z * scale);
+    }, [cloned]);
+
+    return <primitive ref={ref} object={cloned} />;
+}
+
+function GLTFCake() {
+    return (
+        <RotatingFloat>
+            <GLTFModel url={CAKE_MODEL_URL} />
+            <Sprinkles count={50} />
+        </RotatingFloat>
+    );
+}
+
+// Renders the realistic GLTF cake; if the model is missing or errors while loading,
+// quietly falls back to the procedural cake instead of breaking the hero.
+class ModelFallbackBoundary extends Component<{ children: ReactNode }, { hasError: boolean }> {
+    state = { hasError: false };
+    static getDerivedStateFromError() {
+        return { hasError: true };
+    }
+    componentDidCatch(error: Error) {
+        console.warn('[HeroScene] cake model unavailable, using procedural cake:', error.message);
+    }
+    render() {
+        if (this.state.hasError) return <ProceduralCake />;
+        return this.props.children;
+    }
+}
+
+function Cake() {
+    return (
+        <ModelFallbackBoundary>
+            {/* Procedural cake shows instantly while the GLTF streams in. */}
+            <Suspense fallback={<ProceduralCake />}>
+                <GLTFCake />
+            </Suspense>
+        </ModelFallbackBoundary>
     );
 }
 

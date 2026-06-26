@@ -8,7 +8,7 @@ import dynamic from 'next/dynamic';
 import Marquee from '@/components/motion/Marquee';
 import MagneticButton from '@/components/motion/MagneticButton';
 
-const HeroScene = dynamic(() => import('@/components/3d/HeroScene'), {
+const HeroShowcase = dynamic(() => import('@/components/3d/HeroShowcase'), {
     ssr: false,
     loading: () => (
         <div
@@ -58,12 +58,25 @@ export default function HeroBold() {
                             transition={{ duration: 0.6 }}
                             className="font-display font-medium leading-[0.95] tracking-tight text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-balance"
                         >
-                            <span className="block">Baked with</span>
-                            <span className="block">
-                                <em className="text-amber-400 not-italic font-display italic">soul</em>,
-                            </span>
-                            <span className="block">served with </span>
-                            <span className="block italic font-light">love.</span>
+                            {locale === 'mr' ? (
+                                <>
+                                    <span className="block">उत्कृष्ट दर्जा,</span>
+                                    <span className="block">
+                                        <em className="text-amber-400 not-italic">अप्रतिम चव...</em>
+                                    </span>
+                                    <span className="block">विश्वासाचं</span>
+                                    <span className="block font-light">हेच दुसरं नाव!</span>
+                                </>
+                            ) : (
+                                <>
+                                    <span className="block">Premium Quality,</span>
+                                    <span className="block">
+                                        <em className="text-amber-400 not-italic font-display italic">Exceptional Taste...</em>
+                                    </span>
+                                    <span className="block">A Brand You </span>
+                                    <span className="block italic font-light">Can Trust!</span>
+                                </>
+                            )}
                         </motion.h1>
 
                         <motion.p
@@ -94,15 +107,15 @@ export default function HeroBold() {
                         </motion.div>
                     </div>
 
-                    {/* 3D Scene */}
+                    {/* Cake showcase */}
                     <div className="lg:col-span-5 order-1 lg:order-2 relative">
                         <motion.div
                             initial={{ opacity: 0, scale: 0.92 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 1.1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-                            className="relative aspect-square w-full max-w-[520px] mx-auto bg-zinc-950 rounded-full"
+                            className="relative aspect-square w-full max-w-[520px] mx-auto rounded-full"
                         >
-                            <HeroScene />
+                            <HeroShowcase />
                         </motion.div>
                     </div>
                 </div>
