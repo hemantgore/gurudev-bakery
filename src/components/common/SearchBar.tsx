@@ -12,26 +12,24 @@ export default function SearchBar({ value, onChange }: SearchBarProps) {
     const t = useTranslations('menu');
 
     return (
-        <div className="relative max-w-md mx-auto">
-            <div className="relative">
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-zinc-400" />
-                <input
-                    type="text"
-                    value={value}
-                    onChange={(e) => onChange(e.target.value)}
-                    placeholder={t('search_placeholder')}
-                    className="w-full pl-12 pr-12 py-3 bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-full text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all duration-300"
-                />
-                {value && (
-                    <button
-                        onClick={() => onChange('')}
-                        className="absolute right-4 top-1/2 transform -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition-colors"
-                        aria-label="Clear search"
-                    >
-                        <X className="w-5 h-5" />
-                    </button>
-                )}
-            </div>
+        <div className="relative w-full">
+            <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-500" />
+            <input
+                type="text"
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
+                placeholder={t('search_placeholder')}
+                className="w-full pl-14 pr-14 py-4 bg-white/10 dark:bg-zinc-900/40 border border-zinc-700 hover:border-zinc-500 focus:border-amber-400 rounded-full text-base text-current placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-amber-400/30 backdrop-blur-md transition-all duration-300"
+            />
+            {value && (
+                <button
+                    onClick={() => onChange('')}
+                    className="absolute right-5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-current transition-colors"
+                    aria-label="Clear search"
+                >
+                    <X className="w-5 h-5" />
+                </button>
+            )}
         </div>
     );
 }

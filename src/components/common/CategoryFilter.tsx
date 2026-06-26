@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations, useLocale } from 'next-intl';
+import { useLocale } from 'next-intl';
 import { motion } from 'framer-motion';
 import { categories } from '@/lib/products';
 
@@ -10,31 +10,32 @@ interface CategoryFilterProps {
 }
 
 export default function CategoryFilter({ selectedCategory, onCategoryChange }: CategoryFilterProps) {
-    const t = useTranslations('menu.categories');
     const locale = useLocale();
 
     return (
-        <div className="flex flex-wrap gap-3 justify-center">
+        <div className="flex flex-wrap gap-2 justify-center">
             {categories.map((category) => {
                 const isActive = selectedCategory === category.id;
                 const categoryName = locale === 'mr' ? category.nameMr : category.name;
 
                 return (
-                    <motion.button
+                    <button
                         key={category.id}
                         onClick={() => onCategoryChange(category.id)}
-                        whileHover={{ scale: 1.05 }}
-                        whileTap={{ scale: 0.95 }}
-                        className={`
-              px-6 py-2.5 rounded-full font-medium transition-all duration-300
-              ${isActive
-                                ? 'bg-amber-600 text-white shadow-lg shadow-amber-500/50 dark:bg-amber-500'
-                                : 'bg-zinc-100 text-zinc-700 hover:bg-zinc-200 dark:bg-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-700'
-                            }
-            `}
+                        className={`relative px-5 py-2.5 rounded-full text-sm uppercase tracking-[0.2em] font-medium transition-colors duration-300 ${isActive
+                            ? 'text-zinc-950'
+                            : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100'
+                            }`}
                     >
-                        {categoryName}
-                    </motion.button>
+                        {isActive && (
+                            <motion.span
+                                layoutId="category-pill"
+                                className="absolute inset-0 rounded-full bg-amber-400"
+                                transition={{ type: 'spring', stiffness: 400, damping: 32 }}
+                            />
+                        )}
+                        <span className="relative z-10">{categoryName}</span>
+                    </button>
                 );
             })}
         </div>

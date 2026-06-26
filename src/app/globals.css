@@ -66,6 +66,16 @@ body {
   animation: marquee 30s linear infinite;
 }
 
+@keyframes heroKenBurns {
+  from { transform: scale(1.04) translateY(0); }
+  to { transform: scale(1.14) translateY(-1.5%); }
+}
+
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.001ms !important;
